@@ -2,9 +2,9 @@ package org.exercicio.banco.template.model;
 
 /**
 *
-* Nome:
-* Curso:
-* Matrícula:
+* Nome: Gabriel Vinícius da Silva
+* Curso: IPI
+* Matrícula: 20221INFIG0363
 * 
 */
 public class ContaBancaria {
@@ -45,6 +45,11 @@ public class ContaBancaria {
 	 * @param valor
 	 */
 	public void depositar(double valor) {
+		if(valor < 0) {
+			System.out.print("Valor invalido para deposito.");
+		}else if(valor > 0 && status) {
+				this.saldo += valor;
+		}
 		
 	}
 
@@ -61,7 +66,16 @@ public class ContaBancaria {
 	 * @param valor
 	 */
 	public void sacar(double valor) {
-		
+		if( status == false ) {
+			System.out.print("Conta inativa.");
+		} else if(valor <= 0){
+			System.out.print("Valor inválido para saque.");
+		}else if(valor > this.saldo) {
+			System.out.print("Saldo insuficiente.");
+		}else if( status == true && valor > 0 && valor <= this.saldo){
+			
+		}
+		this.saldo -= valor;
 	}
 
 	/**
@@ -73,6 +87,13 @@ public class ContaBancaria {
 	 * fechar a conta. Utilize System.out.print();
 	 */
 	public void fecharConta() {
+		if(status == false) {
+			System.out.print("Conta ja inativa.");
+		} else if(this.saldo > 0 && status == true) {
+			System.out.print("Conta com saldo. Nao eh possivel fecha-la.");
+		} else if(status == true && this.saldo == 0) {
+			status = false;
+		}
 		
 	}
 
@@ -82,7 +103,11 @@ public class ContaBancaria {
 	 * ativa." deve ser exibida no console. Utilize System.out.print();
 	 */
 	public void reabrirConta() {
-		
+		if(status == false) {
+			status = true;
+		} else {
+			System.out.print("Conta já ativa.");
+		}
 	}
 
 	/**
@@ -101,6 +126,16 @@ public class ContaBancaria {
 	 */
 	public void realizarTransferencia(double quantia, ContaBancaria destino) {
 
+		if(status == false) {
+			System.out.print("Conta de origem inativa.");
+		}else if(destino.status == false){
+			System.out.print("Conta de destino inativa.");
+		}else if(quantia > saldo) {
+			System.out.print("Saldo insuficiente para transferencia.");
+		}else {
+			saldo -= quantia;
+			destino.saldo +=quantia;
+		}
 	}
 
 	public int getNumeroConta() {
